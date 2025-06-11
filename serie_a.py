@@ -228,17 +228,17 @@ euclidean_dist_pca = pdist(factors, metric='euclidean')
 # Dendrogram plot using PCA scores
 plt.figure(figsize=(16, 8))
 dend_pca = sch.linkage(factors, method='complete', metric='euclidean')
-sch.dendrogram(dend_pca, color_threshold=2, labels=list(df_seriea['Squad']))
+sch.dendrogram(dend_pca, color_threshold=3, labels=list(df_seriea['Squad']))
 plt.title('Dendrogram (PCA Scores)', fontsize=16)
 plt.xlabel('Teams', fontsize=14)
 plt.ylabel('Euclidean Distance', fontsize=14)
 plt.xticks(rotation=90, fontsize=10)
-plt.axhline(y=2, color='red', linestyle='--')
+plt.axhline(y=3, color='red', linestyle='--')
 plt.tight_layout()
 plt.show()
 
 #%% 🔗 Apply Hierarchical Clustering on PCA Scores
-hier_pca = AgglomerativeClustering(n_clusters=5, metric='euclidean', linkage='complete')
+hier_pca = AgglomerativeClustering(n_clusters=3, metric='euclidean', linkage='complete')
 df_seriea['Cluster_Hierarchical_PCA'] = hier_pca.fit_predict(factors)
 
 # View clusters
@@ -279,7 +279,7 @@ plt.axvline(x=silhouette_pca.index(max(silhouette_pca)) + 2, color='red', linest
 plt.show()
 
 #%% 🔐 Final KMeans Clustering on PCA Scores (e.g., 5 Clusters)
-kmeans_pca = KMeans(n_clusters=5, init='random', random_state=100)
+kmeans_pca = KMeans(n_clusters=3, init='random', random_state=100)
 df_seriea['Cluster_KMeans_PCA'] = kmeans_pca.fit_predict(factors)
 
 # Show teams in each cluster
@@ -317,3 +317,4 @@ plt.ylabel(f"Factor 2: {round(eigen_table.iloc[1]['Variance']*100, 2)}% explaine
 
 plt.tight_layout()
 plt.show()
+
